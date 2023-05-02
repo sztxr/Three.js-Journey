@@ -15,6 +15,42 @@ const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
 /**
+ * Position
+ */
+// mesh.position.x = 0.7; // to the right
+// mesh.position.y = -0.6; // down
+// mesh.position.y = 1; // closer to the camera
+mesh.position.set(0.7, -0.6, 1); // set x, y and z at once
+
+// distance from the mesh to center of the scene
+console.log(mesh.position.length());
+
+// reduces the length of the vector to 1 unit but preserving its direction
+mesh.position.normalize();
+console.log(mesh.position.length());
+
+/**
+ * Scale
+ */
+// mesh.scale.x = 2;
+// mesh.scale.y = 0.25;
+// mesh.scale.z = 0.5;
+mesh.scale.set(2, 0.5, 0.5);
+
+/**
+ * Rotation
+ */
+mesh.rotation.reorder('YXZ');
+mesh.rotation.x = Math.PI * 0.25;
+mesh.rotation.y = Math.PI * 0.25;
+
+/**
+ * Axes Helper
+ */
+const axesHelper = new THREE.AxesHelper(3);
+scene.add(axesHelper);
+
+/**
  * Sizes
  */
 const sizes = {
@@ -27,7 +63,15 @@ const sizes = {
  */
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 camera.position.z = 3;
+// camera.position.y = 1;
+// camera.position.x = 1;
 scene.add(camera);
+
+// distance from the camera and the object
+console.log(mesh.position.distanceTo(camera.position));
+
+// look at the object
+camera.lookAt(mesh.position);
 
 /**
  * Renderer
